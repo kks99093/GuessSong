@@ -77,7 +77,7 @@ export default function RegSong(){
         <>
         <section>
             <h1>노래 리스트 만들기</h1>
-            <form onSubmit={submitSongFrm} id="regSongFrm">
+            <form id="regSongFrm">
             <div className='tbl-header'>
                 <table cellSpacing="0" border="0">
                 <thead>

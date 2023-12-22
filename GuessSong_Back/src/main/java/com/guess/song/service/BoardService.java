@@ -126,7 +126,6 @@ public class BoardService {
 	public SongBoard selSongBoard(int songBoardPk) {
 		SongBoard songBoard = songBoardRep.findByBoardPk(songBoardPk);
 		for(SongInfo songInfo : songBoard.getSongInfoList()) {
-			System.out.println(songInfo.getYoutubeUrl());
 			String youtubeUrl = "youtu.be/" + songInfo.getYoutubeUrl();
 			songInfo.setYoutubeUrl(youtubeUrl);
 		}
@@ -192,8 +191,8 @@ public class BoardService {
 		return result;
 	}
 	
-	public List<GameRoom> selGameRoom(){
-		List<GameRoom> gameRoomList = gameRoomRep.findAll();
+	public Page<GameRoom> selGameRoom(Pageable pageable){
+		Page<GameRoom> gameRoomList = gameRoomRep.findAll(pageable);
 		return gameRoomList;
 	}
 	

@@ -122,14 +122,14 @@ export default function Main(){
 function SongBoard(props){
     const{boardPk, title, img} = props.songBoard;
     const navigate = useNavigate();
-    const moveGameSel = () =>{
-        navigate("/board/modeSel?boardPk="+boardPk);
+    const moveCreateGame = () =>{
+        navigate("/board/createGame?boardPk="+boardPk);
     }
     return(
         <>
         <div className='songBoard_div'>
             <div className='songBoard_img_div' id='songBoard_img_div'>
-                <div id='board_img_div' onClick={moveGameSel}>{
+                <div id='board_img_div' onClick={moveCreateGame}>{
                         img === "" ? <img src="/upload/default/headSet.png" width={200} height={200} alt='test'></img> : <img src={"/upload/songBoard/"+img} width={200} height={200} alt='test'></img>
                     }
                 </div>

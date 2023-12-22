@@ -198,3 +198,9 @@ body {
   .disable_cursor{
       cursor : default;
   }
+
+  .current_page{
+    pointer-events : none;
+    color: #85DCFF;
+    border: #85DCFF solid 1px;
+  }

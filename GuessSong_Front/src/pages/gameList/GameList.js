@@ -8,22 +8,47 @@ export default function GameList(){
     const titleName = "게임 리스트";
     const htmlTitle = document.querySelector("title");
     htmlTitle.innerHTML = titleName;
+    const [pageNumber, setPageNumber] = useState([]);
+    const [pageArr, setPageArr] = useState([]);
+    const [gameListPage, setGameListPage] = useState([]);
 
     let roomNumber = 0;
     const regTypeUserName = /^[가-힣a-zA-z\s0-9]{1,6}$/;
 
     const [gameList, setGameList] = useState([]);
 
-    useEffect(() =>{
-        fetch(
-            "http://localhost:80/gameList",{
-                method : "GET"
-            }
-        )
+    const drawBoard = (res) =>{
+        let arr = [];
+        let startIdx = res.pageable.pageNumber / 10 < 1 ? 1 : res.pageable.pageNumber;
+        let lastIdx = res.totalPages > startIdx + 10 ? startIdx + 10 : res.totalPages;
+        for(let i = startIdx; i <= lastIdx; i++){
+            arr.push(i);
+        }
+
+        setPageArr(arr);
+        setGameList(res.content);
+        setPageNumber(res.pageable.pageNumber);
+        setGameListPage(res);
+    }
+
+    const pageMove = (pgNum) =>{
+        let url = "";
+        if(typeof(pgNum) === typeof(pageNumber)){
+            url = "http://localhost:80/gameList?page="+pgNum;
+        }else{
+            url = "http://localhost:80/gameList"
+        }
+        fetch(url, {
+            method:"GET"
+        })
         .then(res => res.json())
         .then(res =>{
-            setGameList(res);
-        })},[])
+            drawBoard(res);
+        });
+
+    }
+
+    useEffect(pageMove,[])
 
     const clickGameRoom = (roomPk, psword)=>{
         const popup = document.querySelector('#popup');
@@ -113,6 +138,15 @@ export default function GameList(){
                 })}            
             </tbody>
         </table>
+        <div className="page_div">
+            <ul>
+                <li className={pageNumber === 0 ? 'disable_evt disable_cursor' : ''} onClick={() => {pageMove(pageNumber-1)}}>이전</li>
+                {pageArr.map((idx) =>{
+                    return (<li key={idx} className={pageNumber === idx-1 ? 'disable_cursor current_page' : ''} onClick={() =>{pageMove(idx-1)}}>{idx}</li>)
+                })}
+                <li className={pageNumber === gameListPage.totalPages -1 ? 'disable_evt disbale_cursor' : ''} onClick={() =>{pageMove(pageNumber+1)}}>다음</li>
+            </ul>
+        </div>
     </div>
     <div id="popup" className='hide'>
         <div className='content'>

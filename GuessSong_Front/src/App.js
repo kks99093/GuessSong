@@ -4,7 +4,7 @@ import React from 'react'
 import {Routes, Route, BrowserRouter} from 'react-router-dom';
 import Main from './pages/main/Main';
 import RegSong from './pages/regSong/RegSong';
-import ModeSel from './pages/ModeSel';
+import CreateRoom from './pages/createRoom/CreateGame';
 import GameBoard from './pages/GameBoard';
 import GameList from './pages/gameList/GameList';
 
@@ -16,7 +16,7 @@ function App() {
           <Route path="/" exact={true} element={<Main/>}/>
           <Route path="/board/main" exact={true} element={<Main/>}/>
           <Route path="/board/regSong" exact={true} element={<RegSong/>}/>
-          <Route path="/board/modeSel" exact={true} element={<ModeSel/>}/>
+          <Route path="/board/createGame" exact={true} element={<CreateRoom/>}/>
           <Route path="/board/multiGameBoard" exact={true} element={<GameBoard/>}/>
           <Route path="/board/GameList" exact={true} element={<GameList/>}/>
         </Routes>

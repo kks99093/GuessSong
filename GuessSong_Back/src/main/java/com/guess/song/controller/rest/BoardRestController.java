@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.guess.song.model.RestFile;
+import com.guess.song.model.param.GameRoomParam;
 import com.guess.song.model.param.SongBoardParam;
 import com.guess.song.model.param.SongInfoParam;
+import com.guess.song.model.param.UserInfoParam;
 import com.guess.song.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -59,8 +61,25 @@ public class BoardRestController {
 	
 	@CrossOrigin
 	@GetMapping("/gameList")
-	public ResponseEntity<?> selGameList(){
-		return new ResponseEntity<>(boardService.selGameRoom(), HttpStatus.OK);
+	public ResponseEntity<?> selGameList(@PageableDefault(sort = {"createTime"}, direction = Direction.DESC, size = 2) Pageable pageable){
+		return new ResponseEntity<>(boardService.selGameRoom(pageable), HttpStatus.OK);
 	}
-
+	
+	@CrossOrigin
+	@GetMapping("/createGame")
+	public ResponseEntity<?> createGame(SongBoardParam songBoardParam){
+		return new ResponseEntity<>(boardService.selSongBoard(songBoardParam.getBoardPk()), HttpStatus.OK);
+		
+	}
+	
+	
+	@CrossOrigin
+	@PostMapping("/proc/createGameRoom")	
+	public ResponseEntity<?> createGameRoom(UserInfoParam userInfoParam, GameRoomParam gameRoomParam, SongBoardParam songBoardParam){
+		log.info(gameRoomParam.getAmount() + " dd");
+		log.info(songBoardParam.getBoardPk() + " ff");
+		log.info("test");
+		return null;
+		
+	}
 }
